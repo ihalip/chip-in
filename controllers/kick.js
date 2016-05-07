@@ -26,6 +26,10 @@ exports.getNew = function(req, res) {
     });
 };
 
+exports.getById = function(req, res) {
+    res.render('kick/get');
+};
+
 exports.postNew = function(req, res) {
     req.assert('name', 'Name cannot be blank').notEmpty();
     req.assert('end-date', 'End date cannot be blank').notEmpty();
