@@ -1,0 +1,9 @@
+{
+  "name": "chip-in",
+  "version": "0.0.0",
+  "dependencies": {
+    "express": "*",
+    "sails-memory": "^0.10.6",
+    "waterline": "^0.12.1"
+  }
+}
