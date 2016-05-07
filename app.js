@@ -127,6 +127,7 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
 
 app.get('/kick', kickController.index);
 app.get('/kick/new', kickController.getNew);
+app.post('/kick/new', kickController.postNew);
 
 /**
  * API examples routes.
