@@ -3,18 +3,25 @@ extends ../layout
 block content
   .page-header
     h3 Pay
-  form.form-horizontal(id='pay-form', method='POST')
+    
+    p The creator of this chip-in is: #{event.owner_email}
+    p They are raising money for: #{event.description}
+    p Recommended amount is $#{event.recommended_amount}, but you can pay any amount you wish
+    
+    form.form-horizontal
+      .form-group
+        label.col-sm-2.control-label(for='amount') Amount
+        .col-sm-2
+          input.form-control(type='number', name='amount', id='amount', value='#{event.recommended_amount}', autofocus, required)
+  
+  form.form-horizontal(method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
-    .form-group
-      label.col-sm-3.control-label(for='email') Email
-      .col-sm-7
-        input.form-control(type='email', name='email', id='email', placeholder='Email', autofocus, required)
-    .form-group
-      label.col-sm-3.control-label(for='amount') Amount
-      .col-sm-7
-        input.form-control(type='value', name='amount', id='amount', placeholder='$10', required)
-    .form-group
-      .col-sm-offset-3.col-sm-7
-        button.btn.btn-success(type='submit')
-          i.fa.fa-user-plus
-          | Submit
+    input(type='hidden', name='id', value='#{event.id}')
+    script(
+    src='https://checkout.stripe.com/checkout.js' class='stripe-button'
+    data-key='pk_test_6pRNASCoBOKtIshFeQd4XMUh'
+    data-amount='#{event.recommended_amount * 100}'
+    data-name='#{event.name}'
+    data-description='#{event.description}'
+    data-image='https://www.stripe.com/img/documentation/checkout/marketplace.png'
+    data-locale='auto')

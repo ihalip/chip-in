@@ -1,0 +1,43 @@
+extends ../layout
+
+block content
+  .page-header
+    h3 View chip-in
+  
+  p Name: #{event.name}
+  p Automatically generated ID: #{event.id}
+  p Due date: #{event.end_date.toDateString()}
+  p Goal: $#{event.goal}
+  p Recommended amount: $#{event.recommended_amount}
+  p Description: #{event.description}
+  p Service fee: 
+    b $#{event.fee}
+  p Cashed out:
+    b #{event.cashout}
+  
+  p Send this link to your friends so they can contribute: 
+    a(href='/kick/#{event.id}') /kick/#{event.id}
+  
+  hr
+  
+  h3 Contributions
+  ul
+  if transactions.length
+    each val in transactions
+      li #{val.sender} contributed $#{val.amount}. Be sure to thank them!
+  else
+    p There are no contributions yet
+  
+  hr
+  
+  h3 Cash out
+  if (event.cashout == true)
+    p You cashed out. $#{total} will be deposited in your account ASAP.
+  else
+    p You have the option to cash the money for this chip-in if:
+      li you have raised the required amount
+      li due date is either today or in the past
+    form.form-horizontal(method='post')
+      input(type='hidden', name='_csrf', value=_csrf)
+      input(type='hidden', name='id', value='#{event.id}')
+      button(type='submit') Cash out

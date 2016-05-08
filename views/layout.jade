@@ -10,9 +10,13 @@ html
     link(rel='shortcut icon', href='/favicon.png')
     link(rel='stylesheet', href='/css/main.css')
     link(rel='stylesheet', href='/css/bootstrap-datepicker3.css')
+    link(rel='stylesheet', href='https://checkout.stripe.com/v3/checkout/button.css')
+    link(rel='stylesheet', href='/css/site.css')
 
   body
     include partials/header
+
+    script(src='/js/lib/jquery-2.2.0.min.js')
 
     .container
       include partials/flash
@@ -20,7 +24,6 @@ html
 
     include partials/footer
 
-    script(src='/js/lib/jquery-2.2.0.min.js')
     script(src='/js/lib/bootstrap.min.js')
     script(src='/js/main.js')
     script(src='/js/bootstrap-datepicker.js')

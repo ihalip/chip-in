@@ -2,19 +2,44 @@ extends ../layout
 
 block content
   .page-header
-    h3 New kick-in
+    h3 New chip-in
+    p.muted Tips on how to create your chip-in:
+      ul
+        li Set a due date 2-3 days before you actually need the money (some transfer methods might take longer to execute)
+        li Set a short description so your friends know what they are paying for
   form.form-horizontal(id='kick-form', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
-      label.col-sm-3.control-label(for='name') Name
-      .col-sm-7
+      label.col-sm-3.control-label(for='name') Name of this chip-in
+      .col-sm-4
         input.form-control(name='name', id='name', placeholder='Name', autofocus, required)
     .form-group
-      label.col-sm-3.control-label(for='end_date') End date
+      label.col-sm-3.control-label(for='description') Add a short description
       .col-sm-7
-        input.form-control(class='datepicker', name='end_date', id='end_date', placeholder='End date', required)
+        input.form-control(name='description', id='description', placeholder='Why do you want to raise money for?', required)
     .form-group
-      .col-sm-offset-3.col-sm-7
+      label.col-sm-3.control-label(for='end_date') When do you need this money?
+      .col-sm-2
+        input.form-control(class='datepicker', name='end_date', id='end_date', placeholder='Due date', required)
+    .form-group
+      label.col-sm-3.control-label(for='goal') How much do you hope to raise?
+      .col-sm-2
+        input.form-control(type='number', name='goal', id='goal', placeholder='$100', required)
+      label.col-sm-3.control-label(for='fee') Fee for this amount:
+      .col-sm-2
+        input.form-control(type='number', name='fee', id='fee', placeholder='$0', required disabled)
+    .form-group
+      label.col-sm-3.control-label(for='recommended_amount') How much should each person contribute?
+      .col-sm-2
+        input.form-control(type='number', name='recommended_amount', id='recommended_amount', placeholder='$10', required)
+    .form-group
+      .col-sm-offset-2.col-sm-7
         button.btn.btn-success(type='submit')
           i.fa.fa-user-plus
           | Create
+          
+  script
+    | function round(value, decimals) {
+    |   return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+    | }
+    | $('#goal').on('input', function(e) { $('#fee').val(round($(this).val() * 0.05, 2)); });

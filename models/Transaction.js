@@ -1,12 +1,11 @@
 var bcrypt = require('bcrypt-nodejs');
 var crypto = require('crypto');
 var mongoose = require('mongoose');
-var Event = require('./Event.js');
 
 var transactionSchema = new mongoose.Schema({
   amount: Number,
-  comment: String,
-  event: Event.eventSchema
+  sender: String,
+  event_id: String
 });
 
 transactionSchema.pre('save', function(next) {
@@ -14,6 +13,6 @@ transactionSchema.pre('save', function(next) {
   return next();
 });
 
-var Event = mongoose.model('Transaction', transactionSchema);
+var Transaction = mongoose.model('Transaction', transactionSchema);
 
-module.exports = Event;
+module.exports = Transaction;

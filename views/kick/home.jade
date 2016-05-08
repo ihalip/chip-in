@@ -2,9 +2,13 @@ extends ../layout
 
 block content
   .page-header
-    h3 Kick-ins
+    h3 Chip-ins
     
     ul
       each val in events.length ? events : ['There are no values']
-        li
-          a(href='/kick/view/#{val._id}') #{val.name}
+        if (val.cashout == false)
+          li
+            a(href='/kick/view/#{val.id}') #{val.name} (due on #{val.end_date? val.end_date.toLocaleDateString() : 'unknown'})
+        else
+          li
+            strikethrough #{val.name} (already cashed out)
