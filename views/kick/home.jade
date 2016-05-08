@@ -6,7 +6,7 @@ block content
     
     ul
       if (events.length > 0)
-        each val in events.length
+        each val in events
           if (val.cashout == false)
             li
               a(href='/kick/view/#{val.id}') #{val.name} (due on #{val.end_date? val.end_date.toLocaleDateString() : 'unknown'})
