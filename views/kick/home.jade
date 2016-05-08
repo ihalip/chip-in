@@ -5,10 +5,13 @@ block content
     h3 Chip-ins
     
     ul
-      each val in events.length ? events : ['There are no values']
-        if (val.cashout == false)
-          li
-            a(href='/kick/view/#{val.id}') #{val.name} (due on #{val.end_date? val.end_date.toLocaleDateString() : 'unknown'})
-        else
-          li
-            strikethrough #{val.name} (already cashed out)
+      if (events.length > 0)
+        each val in events.length
+          if (val.cashout == false)
+            li
+              a(href='/kick/view/#{val.id}') #{val.name} (due on #{val.end_date? val.end_date.toLocaleDateString() : 'unknown'})
+          else
+            li
+              strikethrough #{val.name} (already cashed out)
+      else
+        p You have no Chip-Ins yet. Please create one.
