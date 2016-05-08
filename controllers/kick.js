@@ -9,6 +9,11 @@ var Transaction = require('../models/Transaction');
 var stripe = require('stripe')(process.env.STRIPE_SKEY);
 
 exports.index = function (req, res) {
+    if (!req.user) {
+        req.flash('errors', { msg: 'You need to be logged in to perform this action.' });
+        return res.redirect('/login');
+    }
+    
     Event.find({}, function (err, events) {
         if (err) {
             return next(err);
@@ -24,12 +29,22 @@ exports.index = function (req, res) {
 };
 
 exports.getStatus = function (req, res) {
+    if (!req.user) {
+        req.flash('errors', { msg: 'You need to be logged in to perform this action.' });
+        return res.redirect('/login');
+    }
+
     res.render('kick/status', {
         title: 'Status'
     });
 };
 
 exports.getNew = function (req, res) {
+    if (!req.user) {
+        req.flash('errors', { msg: 'You need to be logged in to perform this action.' });
+        return res.redirect('/login');
+    }
+    
     res.render('kick/new', {
         title: 'New'
     });
@@ -88,6 +103,11 @@ exports.postPay = function (req, res) {
 };
 
 exports.getView = function (req, res) {
+    if (!req.user) {
+        req.flash('errors', { msg: 'You need to be logged in to perform this action.' });
+        return res.redirect('/login');
+    }
+    
     console.log(req.params.id);
     Event.findOne({ id: req.params.id }, function (err, event) {
         if (err) {
@@ -105,6 +125,11 @@ exports.getView = function (req, res) {
 };
 
 exports.postView = function (req, res) {
+    if (!req.user) {
+        req.flash('errors', { msg: 'You need to be logged in to perform this action.' });
+        return res.redirect('/login');
+    }
+    
     Event.findOne({ id: req.params.id }, function (err, event) {
         if (err) {
             console.log(err);
@@ -130,10 +155,14 @@ exports.postView = function (req, res) {
 };
 
 exports.postNew = function (req, res) {
+    if (!req.user) {
+        req.flash('errors', { msg: 'You need to be logged in to perform this action.' });
+        return res.redirect('/login');
+    }
+    
     req.assert('name', 'Name cannot be blank').notEmpty();
     req.assert('end-date', 'End date cannot be blank').notEmpty();
 
-    console.log(req);
     console.log(req.body);
 
     var event = new Event({

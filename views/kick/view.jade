@@ -21,13 +21,20 @@ block content
   hr
   
   h3 Contributions
+  
+  div.progress(style='width:50%')
+    div.progress-bar(id='progress', role='progressbar', aria-valuenow='0', aria-valuemin='0', aria-valuemax='100', style='width: 0%')
+      span.sr-only 40% Complete (success)
+  
   ul
+  - var totaltransactions = 0
   if transactions.length
     each val in transactions
       li #{val.sender} contributed $#{val.amount}. Be sure to thank them!
+      - totaltransactions += val.amount
   else
     p There are no contributions yet
-  
+    
   hr
   
   h3 Cash out
@@ -41,3 +48,7 @@ block content
       input(type='hidden', name='_csrf', value=_csrf)
       input(type='hidden', name='id', value='#{event.id}')
       button(type='submit') Cash out
+      
+  script
+    | var a = #{totaltransactions}*100/#{event.goal};
+    | $('#progress').css('width', a + '%');
